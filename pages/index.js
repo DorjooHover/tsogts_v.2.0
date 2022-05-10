@@ -1,5 +1,7 @@
-import styles from '../styles/Home.module.css';
-
 export default function Home() {
-	return <div className={styles.container}>asdasdasd</div>;
+	return (
+		<div>
+			<h1>asdf</h1>
+		</div>
+	);
 }
