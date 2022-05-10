@@ -1,4 +1,7 @@
-
 export default function Home() {
-  return <h1>Soko</h1>;
+  return (
+    <div>
+      <h1>asdf</h1>
+    </div>
+  );
 }
