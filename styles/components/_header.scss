@@ -1,0 +1,20 @@
+@use '../sass' as s;
+@use './text';
+#header {
+	display: flex;
+	justify-content: center;
+	margin: 15px 15px 15px 0;
+}
+
+#home__course {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 30px;
+	.course {
+		padding: 20px;
+
+		.header__small {
+			margin-bottom: 20px;
+		}
+	}
+}

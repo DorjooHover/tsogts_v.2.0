@@ -1,0 +1,108 @@
+@use '../sass' as s;
+@use './text';
+
+.sign__container {
+	width: 100vw;
+	height: 100vh;
+	z-index: 999;
+	background-color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	@include s.flexCenter(column, center, center);
+	.header__main {
+		margin: 20px 0;
+	}
+	.sign__wrapper {
+		text-align: center;
+		.sign__form {
+			@include s.flexCenter(column, center, center);
+			gap: 15px;
+			width: 400px;
+			input {
+				padding: 13px 15px;
+				border-radius: 5px;
+				font-size: 17px;
+				font-weight: 700;
+				width: 100%;
+				outline: none;
+			}
+			.sign__input {
+				background-color: s.$body-text;
+				border: 2px solid s.$body-text;
+				transition: 0.3s ease;
+				&:focus {
+					border: 2px solid s.$main-text;
+				}
+			}
+			.sign__submit {
+				padding: 10px 15px;
+				background-color: s.$main-text;
+				color: #fff;
+				border: none;
+				cursor: pointer;
+				&:hover {
+					background-color: s.$main-hover;
+				}
+			}
+		}
+		.sign__mail {
+			position: relative;
+			border: 2px solid s.$body-text;
+			display: grid;
+			place-items: center;
+			cursor: pointer;
+			background-color: #fff;
+			transition: 0.2s ease;
+			&:hover {
+				background-color: s.$body-hover;
+				border: 2px solid s.$main-hover;
+			}
+		}
+	}
+	.forgot {
+		margin: 20px;
+	}
+}
+
+.display {
+	display: grid;
+	// justify-content: space-between;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+	width: 100%;
+	&.sign__btn {
+		margin: 10px 0;
+	}
+	&.verify {
+		display: flex;
+		input {
+			&:nth-child(1) {
+				flex: 80%;
+			}
+			&:nth-child(2) {
+				flex: 20%;
+			}
+		}
+	}
+}
+
+.help {
+	display: flex;
+	justify-content: space-between;
+	margin: 10px;
+	a {
+		color: s.$main-text;
+	}
+}
+
+.sign__img {
+	width: 150px;
+	height: 150px;
+	margin: auto;
+}
+.verify__btn {
+	padding: 10px;
+	border-radius: 5px;
+	background-color: s.$body-hover;
+}
