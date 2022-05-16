@@ -1,0 +1,60 @@
+@use '../sass' as s;
+@use './text';
+
+#popup {
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 30px 40px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid s.$body-text;
+	z-index: 999;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+		rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+	width: clamp(250px, 90%, 400px);
+	.dialog__close {
+		text-align: end;
+		display: flex;
+		justify-content: flex-end;
+		.close__icon {
+			border-radius: 5px;
+			padding: 5px;
+		}
+	}
+	.popup__container {
+		text-align: center;
+		.header__medium {
+			margin: 10px 0;
+		}
+		.popup__wrapper {
+			display: flex;
+			flex-direction: column;
+			margin: 20px 0;
+			input {
+				width: 100%;
+				padding: 10px;
+				margin: 8px 0;
+				border-radius: 5px;
+				border: 1px solid s.$body-hover;
+
+				&:focus {
+					outline: 1px solid s.$main-hover;
+				}
+			}
+		}
+	}
+}
+
+button {
+	border: none;
+	outline: none;
+	background-color: s.$body-text;
+	transition: 0.2s ease;
+	cursor: pointer;
+	@include s.flexCenter(column, center, center);
+	&:hover {
+		background-color: s.$body-hover;
+	}
+}

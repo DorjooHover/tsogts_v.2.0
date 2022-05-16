@@ -1,0 +1,24 @@
+@use '../sass' as s;
+@use './text';
+
+.lesson__section {
+	.video__player {
+		width: 100% !important;
+		height: 100% !important;
+		margin-bottom: 30px
+	}
+	.side__lesson {
+		@include s.flexCenter(row, space-between, center);
+		background-color: #fff;
+		padding: 15px 20px;
+		border-radius: 20px;
+		margin: 10px 0;
+		.lesson__left {
+			display: flex;
+			flex: 60%;
+			#lesson__id {
+				margin-right: 10px;
+			}
+		}
+	}
+}

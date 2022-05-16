@@ -1,0 +1,88 @@
+@use '../sass' as s;
+
+body {
+	color: s.$main-text;
+	background-color: s.$white-bg;
+}
+
+.header__big {
+	font-size: s.$header-big;
+}
+.header__main {
+	font-size: s.$header-main;
+}
+.header__medium {
+	font-size: s.$header-medium;
+}
+.header__small {
+	font-size: s.$header-small;
+}
+.text__big {
+	font-size: s.$text-big;
+}
+.text__medium {
+	font-size: s.$text-medium;
+}
+.text__small {
+	font-size: s.$text-small;
+}
+
+.container {
+	width: clamp(300px, 90%, 1300px);
+}
+.wrapper {
+	margin: 15px 15px 15px 250px;
+	display: flex;
+	// justify-content: center;
+	border-radius: 20px;
+	width: 100%;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: s.$main-text;
+}
+
+.lesson__btn {
+	padding: 8px 20px;
+	background-color: s.$body-text;
+	border-radius: 10px;
+	color: s.$main-text;
+	transition: 0.2s ease;
+	font-size: 14px;
+	&:hover {
+		background-color: s.$main-text;
+		color: #fff;
+	}
+}
+.confirm__btn {
+	padding: 10px 30px;
+	border-radius: 10px;
+	&:nth-child(2) {
+		background-color: s.$main-text;
+		color: #fff;
+		&:hover {
+			background-color: s.$main-hover;
+		}
+	}
+}
+
+.dialog__buttons {
+	@include s.flexCenter(row, center, center);
+	gap: 30px;
+}
+
+@media (max-width: 600px) {
+	.wrapper {
+		margin: 15px 15px 15px 100px;
+		display: flex;
+		justify-content: center;
+		border-radius: 20px;
+		width: 100%;
+	}
+}
