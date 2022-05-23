@@ -17,6 +17,9 @@ body {
 .header__small {
 	font-size: s.$header-small;
 }
+.header__smallest {
+	font-size: 13px;
+}
 .text__big {
 	font-size: s.$text-big;
 }
@@ -37,7 +40,6 @@ body {
 	border-radius: 20px;
 	width: 100%;
 }
-
 
 h1,
 h2,

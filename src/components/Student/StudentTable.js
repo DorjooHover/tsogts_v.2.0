@@ -27,6 +27,15 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
+import {
+	collection,
+	doc,
+	getDoc,
+	onSnapshot,
+	query,
+	where,
+} from 'firebase/firestore';
+import { db } from '../../../config/firebase';
 
 // Table style
 const TableStudent = styled(Box)(({ theme }) => ({
@@ -93,12 +102,12 @@ const headCells = [
 		label: 'Нэр',
 	},
 
-	{
-		id: 'group',
-		numeric: true,
-		disablePadding: false,
-		label: 'Group дугаар',
-	},
+	// {
+	// 	id: 'group',
+	// 	numeric: true,
+	// 	disablePadding: false,
+	// 	label: 'Group дугаар',
+	// },
 	{
 		id: 'phone',
 		numeric: true,
@@ -199,53 +208,7 @@ const EnhancedTableToolbar = props => {
 	const { numSelected } = props;
 
 	return (
-		<Toolbar
-			sx={{
-				pl: { sm: 2 },
-				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: theme =>
-						alpha(
-							theme.palette.primary.main,
-							theme.palette.action.activatedOpacity
-						),
-				}),
-			}}
-		>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					color="inherit"
-					variant="subtitle1"
-					component="div"
-				>
-					{numSelected} selected
-				</Typography>
-			) : (
-				<Typography
-					sx={{ flex: '1 1 100%' }}
-					variant="h6"
-					id="tableTitle"
-					component="div"
-				>
-					All Student
-				</Typography>
-			)}
-
-			{numSelected > 0 ? (
-				<Tooltip title="Delete">
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<Tooltip title="Filter list">
-					<IconButton>
-						<FilterListIcon />
-					</IconButton>
-				</Tooltip>
-			)}
-		</Toolbar>
+		<></>
 	);
 };
 
@@ -253,10 +216,9 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+const StudentsTable = ({ user, selected, setSelected, students }) => {
 	const [order, setOrder] = React.useState('asc');
 	const [orderBy, setOrderBy] = React.useState('email');
-	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -269,19 +231,21 @@ export default function EnhancedTable() {
 
 	const handleSelectAllClick = event => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map(n => n.name);
+			const newSelecteds = students.map(n => n.email);
 			setSelected(newSelecteds);
+
 			return;
 		}
 		setSelected([]);
 	};
 
-	const handleClick = (event, name) => {
-		const selectedIndex = selected.indexOf(name);
+	const handleClick = (event, email) => {
+		const selectedIndex = selected.indexOf(email);
+
 		let newSelected = [];
 
 		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
+			newSelected = newSelected.concat(selected, email);
 		} else if (selectedIndex === 0) {
 			newSelected = newSelected.concat(selected.slice(1));
 		} else if (selectedIndex === selected.length - 1) {
@@ -309,127 +273,159 @@ export default function EnhancedTable() {
 		setDense(event.target.checked);
 	};
 
-	const isSelected = name => selected.indexOf(name) !== -1;
+	const isSelected = email => selected.indexOf(email) !== -1;
 
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+		page > 0
+			? Math.max(0, (1 + page) * rowsPerPage - students.length)
+			: 0;
 
 	return (
-		<Box sx={{ width: '100%' }}>
-			<TableStudent sx={{ width: '100%', mb: 2 }}>
-				<EnhancedTableToolbar numSelected={selected.length} />
-				<TableContainer>
-					<Table
-						sx={{ minWidth: 750 }}
-						aria-labelledby="tableTitle"
-						size={dense ? 'small' : 'medium'}
-					>
-						<StudentTable
+		<>
+			{students && (
+				<Box sx={{ width: '100%' }}>
+					<TableStudent sx={{ width: '100%', mb: 2 }}>
+						<EnhancedTableToolbar
 							numSelected={selected.length}
-							order={order}
-							orderBy={orderBy}
-							onSelectAllClick={handleSelectAllClick}
-							onRequestSort={handleRequestSort}
-							rowCount={rows.length}
 						/>
-						<TableBody>
-							{stableSort(
-								rows,
-								getComparator(order, orderBy)
-							)
-								.slice(
-									page * rowsPerPage,
-									page * rowsPerPage + rowsPerPage
-								)
-								.map((row, index) => {
-									const isItemSelected = isSelected(
-										row.name
-									);
-									const labelId = `enhanced-table-checkbox-${index}`;
+						<TableContainer>
+							<Table
+								sx={{ minWidth: 750 }}
+								aria-labelledby="tableTitle"
+								size={dense ? 'small' : 'medium'}
+							>
+								<StudentTable
+									numSelected={selected.length}
+									order={order}
+									orderBy={orderBy}
+									onSelectAllClick={
+										handleSelectAllClick
+									}
+									onRequestSort={handleRequestSort}
+									rowCount={students.length}
+								/>
+								<TableBody>
+									{stableSort(
+										students,
+										getComparator(order, orderBy)
+									)
+										.slice(
+											page * rowsPerPage,
+											page * rowsPerPage +
+												rowsPerPage
+										)
+										.map((row, index) => {
+											const isItemSelected =
+												isSelected(
+													row.email
+												);
+											const labelId = `enhanced-table-checkbox-${index}`;
 
-									return (
-										<TableRow
-											hover
-											onClick={event =>
-												handleClick(
-													event,
-													row.name
-												)
-											}
-											role="checkbox"
-											aria-checked={
-												isItemSelected
-											}
-											tabIndex={-1}
-											key={row.name}
-											selected={isItemSelected}
-										>
-											<TableCell padding="checkbox">
-												<Checkbox
-													color="primary"
-													checked={
+											return (
+												<TableRow
+													hover
+													onClick={event =>
+														handleClick(
+															event,
+															row.email
+														)
+													}
+													role="checkbox"
+													aria-checked={
 														isItemSelected
 													}
-													inputProps={{
-														'aria-labelledby':
-															labelId,
-													}}
-												/>
-											</TableCell>
-											<TableCell
-												component="th"
-												id={labelId}
-												scope="row"
-												padding="none"
-											>
-												{row.name}
-											</TableCell>
-											<TableCell align="right">
+													tabIndex={-1}
+													key={row.sid}
+													selected={
+														isItemSelected
+													}
+												>
+													<TableCell padding="checkbox">
+														<Checkbox
+															color="primary"
+															checked={
+																isItemSelected
+															}
+															inputProps={{
+																'aria-labelledby':
+																	labelId,
+															}}
+														/>
+													</TableCell>
+													<TableCell
+														component="th"
+														id={
+															labelId
+														}
+														scope="row"
+														padding="none"
+													>
+														{row.name}
+													</TableCell>
+													{/* <TableCell align="right">
 												{row.group}
-											</TableCell>
-											<TableCell align="right">
-												{row.phone}
-											</TableCell>
-											<TableCell align="right">
-												{row.email}
-											</TableCell>
-											{/* <TableCell align="right">
+											</TableCell> */}
+													<TableCell align="right">
+														{
+															row.phone
+														}
+														{!row.phone && (
+															<>
+																Empty
+															</>
+														)}
+													</TableCell>
+													<TableCell align="right">
+														{
+															row.email
+														}
+													</TableCell>
+													{/* <TableCell align="right">
 												{row.carbs}
 											</TableCell>*/}
+												</TableRow>
+											);
+										})}
+									{emptyRows > 0 && (
+										<TableRow
+											style={{
+												height:
+													(dense
+														? 33
+														: 53) *
+													emptyRows,
+											}}
+										>
+											<TableCell colSpan={6} />
 										</TableRow>
-									);
-								})}
-							{emptyRows > 0 && (
-								<TableRow
-									style={{
-										height:
-											(dense ? 33 : 53) *
-											emptyRows,
-									}}
-								>
-									<TableCell colSpan={6} />
-								</TableRow>
-							)}
-						</TableBody>
-					</Table>
-				</TableContainer>
-				<TablePagination
-					rowsPerPageOptions={[5, 10, 25]}
-					component="div"
-					count={rows.length}
-					rowsPerPage={rowsPerPage}
-					page={page}
-					onPageChange={handleChangePage}
-					onRowsPerPageChange={handleChangeRowsPerPage}
-				/>
-			</TableStudent>
-			{/* <FormControlLabel
+									)}
+								</TableBody>
+							</Table>
+						</TableContainer>
+						<TablePagination
+							rowsPerPageOptions={[5, 10, 25]}
+							component="div"
+							count={students.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+							sx={{
+								display: 'flex',
+								justifyContent: 'flex-end',
+							}}
+						/>
+					</TableStudent>
+					{/* <FormControlLabel
 				control={
 					<Switch checked={dense} onChange={handleChangeDense} />
 				}
 				label="Dense padding"
 			/> */}
-		</Box>
+				</Box>
+			)}
+		</>
 	);
-}
+};
+export default StudentsTable;

@@ -24,8 +24,8 @@ const Groups = styled(Box)(({ theme }) => ({
 	borderRadius: 5,
 	backgroundColor: 'white',
 }));
-const groupTable = () => {
-	const [data, setData] = useState(['a1', 'a2', 'a3']);
+const groupTable = ({ category, user, group, setNav, setGroupData }) => {
+
 	return (
 		<Box sx={{ width: 1 }}>
 			<Box
@@ -46,57 +46,82 @@ const groupTable = () => {
 				</Grid>
 				<Grid gridColumn="span 1">
 					<Box
-					// display="grid"
-					// gridTemplateColumns="repeat(2,1fr)"
-					// alignItems="center"
+						display="flex"
+						// gridTemplateColumns="repeat(2,1fr)"
+						justifyContent={'end'}
 					>
 						{/*<Grid gridColumn="span 1"></Grid>
 						<Grid gridColumn="span 1"> */}
-						<AddButtonGroup />
+						{user == 'teacher' && (
+							<AddButtonGroup category={category} />
+						)}
 						{/* </Grid> */}
 					</Box>
 				</Grid>
 			</Box>
-			{data.map(d => {
-				return (
-					// <Link href={`/group/${d}`}>
-					<Groups
-						display="grid"
-						gridTemplateColumns="repeat(12, 1fr)"
-					>
-						{/* Group */}
-						<Grid gridColumn="span 4">
-							<h2 className="header__small">{d} </h2>
-						</Grid>
-						<Grid gridColumn="span 4">
-							<Level />
-						</Grid>
-						<Grid gridColumn="span 3">
-							Total Members : 16
-							{/* Utgaa avna */}
-						</Grid>
-						<Grid gridColumn="span 1">
-							<Box
-								display="grid"
-								gridTemplateColumns="repeat(5,1fr)"
-								textAlign="right"
-								alignItems="center"
-							>
-								<Grid gridColumn="span 1">
-									<Link href={`/group/${d}`}>
-										<a className="lesson__btn">
+
+			{group.map(g => {
+				if (g.categoryId == category.cid)
+					return (
+						// <Link href={`/group/${d}`}>
+						<Groups
+							display="grid"
+							gridTemplateColumns="repeat(12, 1fr)"
+						>
+							{/* Group */}
+							<Grid gridColumn="span 4">
+								<h2 className="header__small">
+									{g.name + ' ' + g.id}{' '}
+								</h2>
+							</Grid>
+							<Grid gridColumn="span 4">
+								<Level
+									category={category}
+									group={g}
+									gid={g.gid}
+								/>
+							</Grid>
+							<Grid gridColumn="span 3">
+								Total Members : {g.students.length}
+								{/* Utgaa avna */}
+							</Grid>
+							<Grid gridColumn="span 1">
+								<Box
+									display="grid"
+									gridTemplateColumns="repeat(5,1fr)"
+									textAlign="right"
+									alignItems="center"
+								>
+									<Grid gridColumn="span 1">
+										<button
+											className="lesson__btn"
+											onClick={() => {
+												setNav('students');
+												setGroupData(
+													groupData => ({
+														...groupData,
+														gid: g.gid,
+														cid: g.categoryId,
+														level_id:
+															g.level_id,
+													})
+												);
+											}}
+										>
 											Харах
-										</a>
-									</Link>
-								</Grid>
-								<Grid gridColumn="span 1">
-									<DialogBtn />
-								</Grid>
-							</Box>
-						</Grid>
-					</Groups>
-					// </Link>
-				);
+										</button>
+									</Grid>
+									<Grid gridColumn="span 1">
+										<DialogBtn
+											gid={g.gid}
+											act={'deleteGroup'}
+										/>
+									</Grid>
+								</Box>
+							</Grid>
+						</Groups>
+						// </Link>
+					);
 			})}
 		</Box>
 	);

@@ -1,13 +1,12 @@
 import React from 'react';
 import Group from '../../src/components/Group';
 
-
-const groups = () => {
+const Groups = ({ category, user, group }) => {
 	return (
 		<>
-			<Group />
+			<Group category={category} user={user} group={group}/>
 		</>
 	);
 };
 
-export default groups;
+export default Groups;

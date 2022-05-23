@@ -1,5 +1,5 @@
 import '../styles/globals.scss';
-import '../src/components/navbar/navbar.scss';
+
 import Layout from '../src/components/Layout';
 
 function MyApp({ Component, pageProps }) {
@@ -11,5 +11,4 @@ function MyApp({ Component, pageProps }) {
 		</div>
 	);
 }
-
 export default MyApp;

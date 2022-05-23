@@ -2,10 +2,12 @@
 @use './text';
 
 .lesson__section {
+	width: 100%;
 	.video__player {
 		width: 100% !important;
 		height: 100% !important;
-		margin-bottom: 30px
+		margin-bottom: 30px;
+		min-height: 40vh;
 	}
 	.side__lesson {
 		@include s.flexCenter(row, space-between, center);

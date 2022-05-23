@@ -31,6 +31,10 @@ import AddIcon from '@mui/icons-material/Add';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { styled } from '@mui/material/styles';
+import { collection, doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../../config/firebase';
+import AddButtonStyled from '../PopUpAdd/AddButtonStyled';
+import DeleteButtonStyled from '../PopUpAdd/DeleteButtonStyled';
 
 // Table style
 const GroupStudentTable = styled(Box)(({ theme }) => ({
@@ -257,13 +261,34 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
+const GroupStudentsTable = ({ groupData }) => {
 	const [order, setOrder] = React.useState('asc');
 	const [orderBy, setOrderBy] = React.useState('email');
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
+	const [student, setStudent] = React.useState();
+	React.useEffect(() => {
+		const fetchData = async () => {
+			const groupDoc = doc(db, 'groups', groupData.gid);
+			const groupSnap = await getDoc(groupDoc);
+			if (groupSnap.data().students.length !== undefined) {
+				const students = [];
+				groupSnap.data().students.map(async s => {
+					const userDoc = doc(db, 'users', s);
+					const userSnap = await getDoc(userDoc);
+
+					students.push({
+						...userSnap.data(),
+						sid: userSnap.id,
+					});
+					setStudent(students);
+				});
+			}
+		};
+		return () => fetchData();
+	}, []);
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === 'asc';
@@ -273,19 +298,19 @@ export default function EnhancedTable() {
 
 	const handleSelectAllClick = event => {
 		if (event.target.checked) {
-			const newSelecteds = rows.map(n => n.name);
+			const newSelecteds = student.map(n => n.email);
 			setSelected(newSelecteds);
 			return;
 		}
 		setSelected([]);
 	};
 
-	const handleClick = (event, name) => {
-		const selectedIndex = selected.indexOf(name);
+	const handleClick = (event, email) => {
+		const selectedIndex = selected.indexOf(email);
 		let newSelected = [];
 
 		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, name);
+			newSelected = newSelected.concat(selected, email);
 		} else if (selectedIndex === 0) {
 			newSelected = newSelected.concat(selected.slice(1));
 		} else if (selectedIndex === selected.length - 1) {
@@ -313,142 +338,170 @@ export default function EnhancedTable() {
 		setDense(event.target.checked);
 	};
 
-	const isSelected = name => selected.indexOf(name) !== -1;
+	const isSelected = email => selected.indexOf(email) !== -1;
 
 	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - student.length) : 0;
 
 	return (
 		<>
-			<div className="add__button">
-				<IconButton aria-label="delete" sx={{ marginLeft: 2 }}>
-					<DeleteIcon />
-				</IconButton>
-
-				<IconButton aria-label="delete" sx={{ marginLeft: 2 }}>
-					<AddIcon />
-				</IconButton>
-			</div>
-			<Box sx={{ width: '100%' }}>
-				<GroupStudentTable sx={{ width: '100%', mb: 2 }}>
-					<EnhancedTableToolbar numSelected={selected.length} />
-					<TableContainer>
-						<Table
-							sx={{ minWidth: 750 }}
-							aria-labelledby="tableTitle"
-							size={dense ? 'small' : 'medium'}
-						>
-							<GroupStudent
-								numSelected={selected.length}
-								order={order}
-								orderBy={orderBy}
-								onSelectAllClick={handleSelectAllClick}
-								onRequestSort={handleRequestSort}
-								rowCount={rows.length}
-							/>
-							<TableBody>
-								{/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-								{stableSort(
-									rows,
-									getComparator(order, orderBy)
-								)
-									.slice(
-										page * rowsPerPage,
-										page * rowsPerPage +
-											rowsPerPage
+			<Box className="add__button">
+				<DeleteButtonStyled
+					act={'studentGroup'}
+					action={'removeStudentFromGroup'}
+					groupData={groupData}
+					selected={selected}
+					setSelected={setSelected}
+				/>
+				<AddButtonStyled
+					act={'studentGroup'}
+					action={'addStudentToGroup'}
+					groupData={groupData}
+				/>
+			</Box>
+			{student && (
+				<Box sx={{ width: '100%' }}>
+					<GroupStudentTable sx={{ width: '100%', mb: 2 }}>
+						<EnhancedTableToolbar
+							numSelected={selected.length}
+						/>
+						<TableContainer>
+							<Table
+								sx={{ minWidth: 750 }}
+								aria-labelledby="tableTitle"
+								size={dense ? 'small' : 'medium'}
+							>
+								<GroupStudent
+									numSelected={selected.length}
+									order={order}
+									orderBy={orderBy}
+									onSelectAllClick={
+										handleSelectAllClick
+									}
+									onRequestSort={handleRequestSort}
+									rowCount={student.length}
+								/>
+								<TableBody>
+									{/* if you don't need to support IE11, you can replace the `stableSort` call with:
+		  rows.slice().sort(getComparator(order, orderBy)) */}
+									{stableSort(
+										student,
+										getComparator(order, orderBy)
 									)
-									.map((row, index) => {
-										const isItemSelected =
-											isSelected(row.name);
-										const labelId = `enhanced-table-checkbox-${index}`;
-
-										return (
-											<TableRow
-												hover
-												onClick={event =>
-													handleClick(
-														event,
-														row.name
-													)
-												}
-												role="checkbox"
-												aria-checked={
-													isItemSelected
-												}
-												tabIndex={-1}
-												key={row.name}
-												selected={
-													isItemSelected
-												}
-											>
-												<TableCell padding="checkbox">
-													<Checkbox
-														color="primary"
-														checked={
-															isItemSelected
-														}
-														inputProps={{
-															'aria-labelledby':
-																labelId,
-														}}
-													/>
-												</TableCell>
-												<TableCell
-													component="th"
-													id={labelId}
-													scope="row"
-													padding="none"
+										.slice(
+											page * rowsPerPage,
+											page * rowsPerPage +
+												rowsPerPage
+										)
+										.map((row, index) => {
+											const isItemSelected =
+												isSelected(
+													row.email
+												);
+											const labelId = `enhanced-table-checkbox-${index}`;
+											return (
+												<TableRow
+													hover
+													onClick={event =>
+														handleClick(
+															event,
+															row.email
+														)
+													}
+													role="checkbox"
+													aria-checked={
+														isItemSelected
+													}
+													tabIndex={-1}
+													key={row.sid}
+													selected={
+														isItemSelected
+													}
 												>
-													{row.name}
-												</TableCell>
-												<TableCell align="right">
-													{row.phone}
-												</TableCell>
-												<TableCell align="right">
-													{row.email}
-												</TableCell>
-												{/* <TableCell align="right">
-												{row.carbs}
-											</TableCell>
-											<TableCell align="right">
-												{row.protein}
-											</TableCell> */}
-											</TableRow>
-										);
-									})}
-								{emptyRows > 0 && (
-									<TableRow
-										style={{
-											height:
-												(dense ? 33 : 53) *
-												emptyRows,
-										}}
-									>
-										<TableCell colSpan={6} />
-									</TableRow>
-								)}
-							</TableBody>
-						</Table>
-					</TableContainer>
-					<TablePagination
-						rowsPerPageOptions={[5, 10, 25]}
-						component="div"
-						count={rows.length}
-						rowsPerPage={rowsPerPage}
-						page={page}
-						onPageChange={handleChangePage}
-						onRowsPerPageChange={handleChangeRowsPerPage}
-					/>
-				</GroupStudentTable>
-				{/* <FormControlLabel
-				control={
-					<Switch checked={dense} onChange={handleChangeDense} />
-				}
-				label="Dense padding"
-			/> */}
-			</Box>{' '}
+													<TableCell padding="checkbox">
+														<Checkbox
+															color="primary"
+															checked={
+																isItemSelected
+															}
+															inputProps={{
+																'aria-labelledby':
+																	labelId,
+															}}
+														/>
+													</TableCell>
+													<TableCell
+														component="th"
+														id={
+															labelId
+														}
+														scope="row"
+														padding="none"
+													>
+														{row.name}
+													</TableCell>
+													<TableCell align="right">
+														{row.phone && (
+															<>
+																row.phone
+															</>
+														)}
+														{!row.phone && (
+															<>
+																empty
+															</>
+														)}
+													</TableCell>
+													<TableCell align="right">
+														{
+															row.email
+														}
+													</TableCell>
+													{/* <TableCell align="right">
+											{row.carbs}
+										</TableCell>
+										<TableCell align="right">
+											{row.protein}
+										</TableCell> */}
+												</TableRow>
+											);
+										})}
+									{emptyRows > 0 && (
+										<TableRow
+											style={{
+												height:
+													(dense
+														? 33
+														: 53) *
+													emptyRows,
+											}}
+										>
+											<TableCell colSpan={6} />
+										</TableRow>
+									)}
+								</TableBody>
+							</Table>
+						</TableContainer>
+						<TablePagination
+							rowsPerPageOptions={[5, 10, 25]}
+							component="div"
+							count={student.length}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
+						/>
+					</GroupStudentTable>
+					{/* <FormControlLabel
+			control={
+				<Switch checked={dense} onChange={handleChangeDense} />
+			}
+			label="Dense padding"
+		/> */}
+				</Box>
+			)}
 		</>
 	);
-}
+};
+export default GroupStudentsTable;

@@ -4,11 +4,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function Selectlevel() {
-	const [level, setLevel] = React.useState('');
-
+export default function Selectlevel({
+	category,
+	setFilterByLevel,
+	filterByLevel,
+}) {
 	const handleChange = event => {
-		setLevel(event.target.value);
+		setFilterByLevel(event.target.value);
 	};
 
 	return (
@@ -17,14 +19,14 @@ export default function Selectlevel() {
 			<Select
 				labelId="demo-select-small"
 				id="demo-select-small"
-				value={level}
+				value={filterByLevel}
 				label="Түвшин"
 				onChange={handleChange}
 			>
-				<MenuItem value=""></MenuItem>
-				<MenuItem value={1}>1</MenuItem>
-				<MenuItem value={2}>2</MenuItem>
-				<MenuItem value={3}>3</MenuItem>
+				<MenuItem value={-1}>All</MenuItem>;
+				{category.levels.map((l, index) => {
+					return <MenuItem value={index}>{l.level}</MenuItem>;
+				})}
 			</Select>
 		</FormControl>
 	);

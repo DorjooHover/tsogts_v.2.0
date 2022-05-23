@@ -14,15 +14,20 @@
     "@mui/icons-material": "^5.6.2",
     "@mui/material": "^5.7.0",
     "@mui/styled-engine": "^5.7.0",
-    "@zeit/next-sass": "^1.0.1",
+    "@zeit/next-sass": "^0.0.6",
     "babel-preset-next": "^1.4.0",
+    "firebase": "^9.8.1",
+    "griffith": "^1.26.0",
     "mui-datatables": "^4.2.2",
     "next": "12.1.6",
+    "nookies": "^2.5.2",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-icons": "^4.3.1",
-    
+    "react-loader-spinner": "^6.0.0-0",
+    "react-loading": "^2.0.3",
     "react-player": "^2.10.1",
+    "react-spinners": "^0.12.0",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

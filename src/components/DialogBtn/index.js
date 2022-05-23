@@ -3,7 +3,7 @@ import Dialog from './Dialog';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const DialogBtn = () => {
+const DialogBtn = ({ gid, act, lid , cid}) => {
 	const [openDialog, setOpenDialog] = useState(false);
 
 	return (
@@ -17,7 +17,16 @@ const DialogBtn = () => {
 			>
 				<DeleteIcon />
 			</IconButton>
-			{openDialog && <Dialog closeDialog={setOpenDialog} />}
+			{openDialog && (
+				<Dialog
+					closeDialog={setOpenDialog}
+					text={'Грүпп устгахдаа итгэлтэй байна уу?'}
+					act={act}
+					gid={gid}
+					lid={lid}
+					cid={cid}
+				/>
+			)}
 		</>
 	);
 };

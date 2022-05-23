@@ -1,7 +1,8 @@
 @use '../sass' as s;
 @use './text';
 
-#popup {
+#popup,
+#popup_student {
 	background-color: #fff;
 	border-radius: 20px;
 	padding: 30px 40px;
@@ -32,19 +33,29 @@
 			display: flex;
 			flex-direction: column;
 			margin: 20px 0;
-			input {
+			input,
+			select,
+			option {
 				width: 100%;
 				padding: 10px;
 				margin: 8px 0;
 				border-radius: 5px;
 				border: 1px solid s.$body-hover;
-
+				background-color: transparent;
 				&:focus {
 					outline: 1px solid s.$main-hover;
 				}
 			}
 		}
 	}
+	button {
+		display: block;
+	}
+}
+
+#popup_student {
+	width: 100%;
+	max-width: 1000px;
 }
 
 button {

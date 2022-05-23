@@ -1,10 +1,10 @@
 import React from 'react';
 import Student from '../src/components/Student';
 
-const StudentPage = () => {
+const StudentPage = ({ groupData }) => {
 	return (
 		<>
-			<Student />
+			<Student groupData={groupData} />
 		</>
 	);
 };
