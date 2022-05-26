@@ -96,7 +96,6 @@ const Lesson = ({ lessonData, lesson, setLessonData, group }) => {
 			});
 		}
 	};
-	console.log(lesson, lessonData);
 
 	return (
 		<>
@@ -114,7 +113,6 @@ const Lesson = ({ lessonData, lesson, setLessonData, group }) => {
 									videoUrl
 										.slice(0, 1)
 										.map((v, index) => {
-											console.log(v.video);
 											return (
 												<Player
 													sources={{
@@ -123,6 +121,7 @@ const Lesson = ({ lessonData, lesson, setLessonData, group }) => {
 																v.video,
 														},
 													}}
+													key={v.lid}
 												/>
 											);
 										})}
@@ -130,11 +129,6 @@ const Lesson = ({ lessonData, lesson, setLessonData, group }) => {
 									lessonData.lid != '' &&
 									videoUrl.map((v, index) => {
 										if (v.lid == lessonData.lid) {
-											console.log(
-												videoUrl,
-												lessonData.lid,
-												v.video
-											);
 											return (
 												<Player
 													sources={{
@@ -143,6 +137,7 @@ const Lesson = ({ lessonData, lesson, setLessonData, group }) => {
 																v.video,
 														},
 													}}
+													key={v.lid}
 												/>
 											);
 										}

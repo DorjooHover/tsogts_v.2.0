@@ -101,7 +101,10 @@ const AdminHeader = ({
 									</h2>
 									{category.map(c => {
 										if (c.cid == g.categoryId) {
-											console.log((lesson.lessons.length))
+											console.log(
+												lesson.lessons
+													.length
+											);
 											return (
 												<>
 													<h3 className="header__smallest">
@@ -133,13 +136,7 @@ const AdminHeader = ({
 																		countLesson++;
 																}
 															)}
-														{lesson
-															.lessons
-															.length !=
-															0 && (
-															countLesson,
-														)}
-														
+														countLesson
 													</p>
 												</>
 											);

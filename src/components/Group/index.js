@@ -36,7 +36,7 @@ const Group = ({ category, user, group, setNav, setGroupData, groupData }) => {
 				!groupData.cid &&
 				category.map(c => {
 					return (
-						<div className="container">
+						<div className="container" key={c.cid}>
 							<h1 className="header__big">{c.name}</h1>
 							<div className="main__section">
 								<div className="group__content">

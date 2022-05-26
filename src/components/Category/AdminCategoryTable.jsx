@@ -74,6 +74,7 @@ const AdminCategoryTable = ({
 					<Groups
 						display="grid"
 						gridTemplateColumns="repeat(12, 1fr)"
+						key={c.cid}
 					>
 						{/* Group */}
 						<Grid gridColumn="span 4">

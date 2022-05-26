@@ -131,6 +131,9 @@ const PopUpGroup = ({ closePopUp, category }) => {
 															value={
 																index
 															}
+															key={
+																level.cid
+															}
 														>
 															{
 																level.level

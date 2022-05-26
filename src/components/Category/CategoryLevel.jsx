@@ -26,7 +26,11 @@ export default function CategoryLevel({ category, group, gid }) {
 				onChange={handleChange}
 			>
 				{category[0].levels.map((c, index) => {
-					return <MenuItem value={index}>{c.level}</MenuItem>;
+					return (
+						<MenuItem value={index} key={c.cid}>
+							{c.level}
+						</MenuItem>
+					);
 				})}
 			</Select>
 			{level !== null && openDialog && (
