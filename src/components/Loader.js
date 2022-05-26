@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DotLoader } from 'react-loader-spinner';
+import { HashLoader } from 'react-spinners';
 
 const Loader = () => {
 	const [isLoading, setIsLoading] = useState(true);
