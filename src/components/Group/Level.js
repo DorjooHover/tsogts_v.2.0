@@ -15,7 +15,6 @@ export default function SelectSmall({ category, group, gid }) {
 	};
 	return (
 		<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-
 			<InputLabel id="demo-select-small">
 				{category.levels[group.level_id].level}
 			</InputLabel>
@@ -27,7 +26,11 @@ export default function SelectSmall({ category, group, gid }) {
 				onChange={handleChange}
 			>
 				{category.levels.map((c, index) => {
-					return <MenuItem value={index}>{c.level}</MenuItem>;
+					return (
+						<MenuItem value={index} key={c.cid}>
+							{c.level}
+						</MenuItem>
+					);
 				})}
 			</Select>
 			{level !== null && openDialog && (
