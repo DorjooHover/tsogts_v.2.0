@@ -14,7 +14,7 @@ const Loader = () => {
 		<div>
 			{isLoading ? (
 				<div>
-					<DotLoader size={10} loading={loading} />
+					<HashLoader size={10} loading={loading} />
 				</div>
 			) : (
 				<div>{children}</div>
