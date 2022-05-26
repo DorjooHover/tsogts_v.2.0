@@ -5,7 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Dialog from '../DialogBtn/Dialog';
 
-export default function SelectSmall({ category, group, gid }) {
+export default function CategoryLevel({ category, group, gid }) {
 	const [level, setLevel] = useState(null);
 	const [openDialog, setOpenDialog] = useState(false);
 
@@ -15,9 +15,8 @@ export default function SelectSmall({ category, group, gid }) {
 	};
 	return (
 		<FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-
 			<InputLabel id="demo-select-small">
-				{category.levels[group.level_id].level}
+				{/* {category.levels[0].level} */}
 			</InputLabel>
 			<Select
 				labelId="demo-select-small"
@@ -26,7 +25,7 @@ export default function SelectSmall({ category, group, gid }) {
 				label="Level"
 				onChange={handleChange}
 			>
-				{category.levels.map((c, index) => {
+				{category[0].levels.map((c, index) => {
 					return <MenuItem value={index}>{c.level}</MenuItem>;
 				})}
 			</Select>

@@ -26,6 +26,7 @@ import Navbar from '../Navbar';
 import Student from '../Student';
 import Teacher from '../teachers';
 import GroupStudentsTable from '../Group/GroupStudent';
+import AdminCategory from '../Category';
 import { Box } from '@mui/material';
 const Admin = () => {
 	const { currentUser } = useAuth();
@@ -179,6 +180,16 @@ const Admin = () => {
 							lessonData={lessonData}
 						/>
 					)}
+					{nav == 'category' && (
+						<AdminCategory
+							category={category}
+							group={group}
+							lesson={lesson}
+							setNav={setNav}
+							setLessonData={setLessonData}
+							lessonData={lessonData}
+						/>
+					)}
 					{nav == 'group' && (
 						<Group
 							group={group}
@@ -238,49 +249,7 @@ const Admin = () => {
 				</>
 			)}
 
-			{/* addCategory */}
-			<form onSubmit={addCategory}>
-				<input
-					type="text"
-					onChange={e =>
-						setEffectCategory({
-							...effectCategory,
-							name: e.target.value,
-						})
-					}
-					value={effectCategory.name}
-					required
-				/>
-				<input type="submit" value="addCate" />
-			</form>
-			{/* add student to group */}
-			<form onSubmit={addStudentToGroup}>
-				<input type="text" />
-				<input type="submit" value="addtogroup" />
-			</form>
-			{/* removestudentFromgroup */}
-			<button onClick={deleteStudentFromGroup}>
-				removestudentFromgroup
-			</button>
-			{/* update category */}
-			<form onSubmit={updateCategory}>
-				<input
-					type="text"
-					onChange={e =>
-						setEffectCategory({
-							...effectCategory,
-							name: e.target.value,
-						})
-					}
-					value={effectCategory.name}
-					required
-				/>
-				<input type="submit" value="updateCate" />
-			</form>
-			{/* delete category */}
-			<button onClick={() => deleteCategory('LV2pKsTqCwSHCvV4oquM')}>
-				delete category
-			</button>
+
 		</Box>
 	);
 };

@@ -124,6 +124,13 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 							</li>
 							<li
 								className="nav__item"
+								onClick={() => setNav('category')}
+							>
+								<BsFillPeopleFill className="navIcon" />
+								<p className="text__big">Category</p>
+							</li>
+							<li
+								className="nav__item"
 								onClick={() =>
 									setDropDownGroup(!dropDownGroup)
 								}

@@ -25,7 +25,6 @@ const Groups = styled(Box)(({ theme }) => ({
 	backgroundColor: 'white',
 }));
 const groupTable = ({ category, user, group, setNav, setGroupData }) => {
-
 	return (
 		<Box sx={{ width: 1 }}>
 			<Box

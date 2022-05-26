@@ -20,6 +20,11 @@ const Dialog = ({ closeDialog, level, text, gid, act, lid, cid }) => {
 		await deleteDoc(doc(db, 'categories/' + cid + '/lessons/' + lid));
 	};
 
+	const deleteCategory = async () => {
+		closeDialog(false);
+		await deleteDoc(doc(db, 'categories', cid));
+	};
+
 	return (
 		<>
 			<div id="dialog">
@@ -63,6 +68,14 @@ const Dialog = ({ closeDialog, level, text, gid, act, lid, cid }) => {
 						<button
 							className="confirm__btn text__big dialog"
 							onClick={changeGroupLevel}
+						>
+							Тийм
+						</button>
+					)}
+					{act == 'deleteCategory' && (
+						<button
+							className="confirm__btn text__big dialog"
+							onClick={deleteCategory}
 						>
 							Тийм
 						</button>
