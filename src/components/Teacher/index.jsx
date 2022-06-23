@@ -20,14 +20,12 @@ import { useAuth } from '../../../config/Auth';
 import { db, storage } from '../../../config/firebase';
 import TeacherHeader from '../Header/Teacher';
 import Navbar from '../Navbar';
-import TeacherGroup from '../../../pages/group/teacher';
 
 import Group from '../Group';
 import Lesson from '../Lesson';
 import LessonsComp from '../LessonsComp';
 import StudentPart from '../Students';
-import StudentPage from '../../../pages/student';
-import EnhancedTable from '../Group/GroupStudent';
+
 import GroupStudentsTable from '../Group/GroupStudent';
 import { Box } from '@mui/material';
 const Teacher = () => {

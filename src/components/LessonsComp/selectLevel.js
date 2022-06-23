@@ -25,7 +25,11 @@ export default function Selectlevel({
 			>
 				<MenuItem value={-1}>All</MenuItem>;
 				{category.levels.map((l, index) => {
-					return <MenuItem value={index}>{l.level}</MenuItem>;
+					return (
+						<MenuItem value={index} key={l.cid}>
+							{l.level}
+						</MenuItem>
+					);
 				})}
 			</Select>
 		</FormControl>

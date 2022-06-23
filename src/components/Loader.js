@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DotLoader } from 'react-loader-spinner';
+import { HashLoader } from 'react-spinners';
 
 const Loader = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +14,7 @@ const Loader = () => {
 		<div>
 			{isLoading ? (
 				<div>
-					<DotLoader size={10} loading={loading} />
+					<HashLoader size={10} loading={loading} />
 				</div>
 			) : (
 				<div>{children}</div>
