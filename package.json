@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -16,6 +17,7 @@
     "@mui/styled-engine": "^5.8.0",
     "babel-preset-next": "^1.4.0",
     "firebase": "^9.8.3",
+    "firebase-functions": "^3.21.2",
     "griffith": "^1.26.0",
     "next": "12.1.6",
     "nookies": "^2.5.2",
