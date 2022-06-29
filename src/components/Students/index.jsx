@@ -86,7 +86,7 @@ const Student = () => {
 			//     setLesson(queryLesson.docs.map((l) => ({...l.data(), lessonId: l.id})))
 			// })
 		};
-		return () => fetchData();
+		fetchData();
 	}, []);
 
 	return (

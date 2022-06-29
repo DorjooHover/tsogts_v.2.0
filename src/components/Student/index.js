@@ -48,9 +48,9 @@ const Student = ({ user }) => {
 			});
 		};
 
-		return () => {
+
 			fetchData();
-		};
+
 	}, []);
 	return (
 		<div className="container">

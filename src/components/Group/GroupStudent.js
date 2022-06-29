@@ -287,7 +287,7 @@ const GroupStudentsTable = ({ groupData }) => {
 				});
 			}
 		};
-		return () => fetchData();
+		fetchData();
 	}, []);
 
 	const handleRequestSort = (event, property) => {

@@ -17,7 +17,7 @@ const Loading = ({ type, color, loading }) => {
       direction="column"
       alignItems={"center"}
       justifyContent="center"
-      style={{ minHeight: "100vh" }}
+      style={{ height: "100vh", width: "100vw" }}
     >
       <HashLoader
         color={"#11101b"}

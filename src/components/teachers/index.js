@@ -46,9 +46,9 @@ const Teacher = ({ user }) => {
 			});
 		};
 
-		return () => {
+		
 			fetchData();
-		};
+		
 	}, []);
 	console.log(selected);
 	return (
