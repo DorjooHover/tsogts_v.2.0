@@ -41,13 +41,13 @@ const AdminCategoryTable = ({
 			>
 				{/* Group */}
 				<Grid gridColumn="span 4" fontWeight={700}>
-					Category name
+					Нэр
 				</Grid>
 				<Grid gridColumn="span 4" fontWeight={700}>
-					Course level
+					Түвшин
 				</Grid>
 				<Grid gridColumn="span 3" fontWeight={700}>
-					Members
+					Сурагчид
 				</Grid>
 				<Grid gridColumn="span 1">
 					<Box

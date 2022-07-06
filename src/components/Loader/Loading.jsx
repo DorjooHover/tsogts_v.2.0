@@ -17,7 +17,12 @@ const Loading = ({ type, color, loading }) => {
       direction="column"
       alignItems={"center"}
       justifyContent="center"
-      style={{ height: "100vh", width: "100vw" }}
+      width={"100vw"}
+      height={"100vh"}
+      position="absolute"
+      zIndex={"100"}
+      top={"0px"}
+      left={"0px"}
     >
       <HashLoader
         color={"#11101b"}

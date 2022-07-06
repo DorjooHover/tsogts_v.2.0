@@ -13,7 +13,7 @@ const AdminCategory = ({
 	return (
 		<>
 			<div className="container">
-				<h1 className="header__big">Categories</h1>
+				<h1 className="header__big">Төрлүүд</h1>
 
 				<div className="main__section">
 					<div className="group__content">

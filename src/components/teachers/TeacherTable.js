@@ -237,7 +237,7 @@ const EnhancedTableToolbar = props => {
 					id="tableTitle"
 					component="div"
 				>
-					All Teachers
+					Багш нар
 				</Typography>
 			)}
 

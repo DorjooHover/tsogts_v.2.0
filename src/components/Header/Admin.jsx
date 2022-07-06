@@ -78,7 +78,7 @@ const AdminHeader = ({
 
 			{category && lesson && (
 				<div className="container">
-					<h1 className="header__big">All groups</h1>
+					<h1 className="header__big">Бүх Анги</h1>
 					<div id="home__course">
 						{group.map((g, index) => {
 							let countLesson = 0;
@@ -113,7 +113,7 @@ const AdminHeader = ({
 															g.categoryId}
 													</h3>
 
-													<p className="text__small">
+													{/* <p className="text__small">
 														<LibraryBooksIcon
 															fontSize="small"
 															className="course__icon"
@@ -137,7 +137,7 @@ const AdminHeader = ({
 																}
 															)}
 														countLesson
-													</p>
+													</p> */}
 												</>
 											);
 										}

@@ -65,14 +65,14 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 								onClick={() => setNav('home')}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Home</p>
+								<p className="text__big">Үндсэн</p>
 							</li>
 							<li
 								className="nav__item"
 								onClick={() => setNav('group')}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Group</p>
+								<p className="text__big">Анги</p>
 							</li>
 							<li
 								className="nav__item"
@@ -80,7 +80,7 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 							>
 								<>
 									<BiBookOpen className="navIcon" />
-									<p className="text__big">Lesson</p>
+									<p className="text__big">Хичээл</p>
 								</>
 
 								{/* <ul>
@@ -109,7 +109,7 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 								onClick={() => setNav('home')}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Home</p>
+								<p className="text__big">Үндсэн</p>
 							</li>
 						</ul>
 					)}
@@ -120,14 +120,14 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 								onClick={() => setNav('home')}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Home</p>
+								<p className="text__big">Үндсэн</p>
 							</li>
 							<li
 								className="nav__item"
 								onClick={() => setNav('category')}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Category</p>
+								<p className="text__big">Төрөл</p>
 							</li>
 							<li
 								className="nav__item"
@@ -136,7 +136,7 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 								}
 							>
 								<BsFillPeopleFill className="navIcon" />
-								<p className="text__big">Group</p>
+								<p className="text__big">Анги</p>
 								{dropDownGroup && (
 									<ArrowDropDown
 										className="navIcon"
@@ -196,7 +196,7 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 							>
 								<>
 									<BiBookOpen className="navIcon" />
-									<p className="text__big">Lesson</p>
+									<p className="text__big">Хичээл</p>
 									{dropDownLesson && (
 										<ArrowDropDown
 											className="navIcon"
@@ -254,14 +254,14 @@ const Navbar = ({ category, user, setNav, setLessonData, setGroupData }) => {
 								onClick={() => setNav('student')}
 							>
 								<BsFillPersonFill className="navIcon" />
-								<p className="text__big">Student</p>
+								<p className="text__big">Сурагч</p>
 							</li>
 							<li
 								className="nav__item"
 								onClick={() => setNav('teacher')}
 							>
 								<GiTeacher className="navIcon" />
-								<p className="text__big">Teacher</p>
+								<p className="text__big">Багш</p>
 							</li>
 						</ul>
 					)}

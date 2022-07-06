@@ -35,13 +35,13 @@ const groupTable = ({ category, user, group, setNav, setGroupData }) => {
 			>
 				{/* Group */}
 				<Grid gridColumn="span 4" fontWeight={700}>
-					Group name
+					Ангийн нэр
 				</Grid>
 				<Grid gridColumn="span 4" fontWeight={700}>
-					Course level
+					Түвшин
 				</Grid>
 				<Grid gridColumn="span 3" fontWeight={700}>
-					Members
+					Сурагчид
 				</Grid>
 				<Grid gridColumn="span 1">
 					<Box
